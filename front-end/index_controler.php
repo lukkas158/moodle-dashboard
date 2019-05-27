@@ -27,10 +27,42 @@ if (!$teacher) {
 
 // Usado para pegar um usuário em específico.
 $students = get_role_users(5, $context);
-
 $data->student_qty = count($students);
 $data->course_shortname = $course->shortname;
 
-//print_object($data);
+$students_id = [];
+foreach ($students as $student) {
+	$students_id[] = $student->id;
+}
+$comma = implode(",", $students_id);
+
+$logs = $DB->get_records_sql("SELECT timecreated FROM moodle.mdl_logstore_standard_log WHERE action='loggedin' AND userid IN ({$comma}) order by timecreated");
+
+$max = end($logs);
+$min = reset($logs);
+
+$maxd = new DateTime();
+$mind = new DateTime();
+$maxd->setTimestamp($max->timecreated);
+$mind->setTimestamp($min->timecreated);
+$maxd = new DateTime($maxd->format("Y-m-d"));
+$mind = new DateTime($mind->format("Y-m-d"));
+
+$result = [];
+for ($i = $mind; $i <= $maxd; $i->modify("+1 day")) {
+	$result[$i->format("Y-m-d")] = 0;
+	foreach ($logs as $log) {
+		$date = (new DateTime())->setTimestamp($log->timecreated);
+		if ($i->format("Y-m-d") == $date->format("Y-m-d")) {
+			$result[$i->format("Y-m-d")] += 1;
+		}
+	}
+}
+
+$data->loggedin = $result;
+
+// foreach($logs as $log) {
+
+// }
 
 ?>

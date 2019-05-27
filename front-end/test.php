@@ -1,9 +1,16 @@
 <?php
 
-$test = ["id" => 10];
+$datetime1 = new DateTime('2009-10-13 12:12:00');
+$datetime2 = new DateTime('2009-10-13 10:12:00');
 
-$test['test'] = "lucas";
+if ($datetime1 > $datetime2) {
+	echo 'datetime1 greater than datetime2';
+}
 
-print_r($test);
+if ($datetime1 < $datetime2) {
+	echo 'datetime1 lesser than datetime2';
+}
 
-?>
+if ($datetime1 === $datetime2) {
+	echo 'datetime2 is equal than datetime1';
+}

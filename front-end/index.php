@@ -347,7 +347,7 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Students</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Quantidade de Estudantes</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $data->student_qty ?></div>
                     </div>
                     <div class="col-auto">
@@ -364,7 +364,7 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Courses</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Curso </div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $data->course_shortname ?></div>
                     </div>
                     <div class="col-auto">
@@ -428,7 +428,7 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Frequência de Acesso - Overview</h6>
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -444,9 +444,7 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
-                  </div>
+                    <div id="plot_freq"><!-- Plotly chart will be drawn inside this DIV --></div>
                 </div>
               </div>
             </div>
@@ -672,6 +670,24 @@
   <!-- Page level custom scripts -->
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <script>
+  var data_php = <?php echo json_encode($data->loggedin) ?>;
+  var x_date = Object.keys(data_php);
+  var y_count = Object.values(data_php);
+
+  var data = [
+  {
+    x: x_date,
+    y: y_count,
+    type: 'scatter',
+    mode: 'line'
+  }
+];
+  Plotly.newPlot('plot_freq', data);
+
+  </script>
 
 </body>
 
