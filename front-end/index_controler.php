@@ -6,6 +6,7 @@ $data = new StdClass;
 
 require_login();
 $courseid = required_param("courseid", PARAM_INT);
+$studentid = optional_param("studentid", NULL, PARAM_INT);
 $course = $DB->get_record("course", ["id" => $courseid], "*", MUST_EXIST);
 
 $context = context_course::instance($course->id);
@@ -29,12 +30,19 @@ if (!$teacher) {
 $students = get_role_users(5, $context);
 $data->student_qty = count($students);
 $data->course_shortname = $course->shortname;
-
-$students_id = [];
-foreach ($students as $student) {
-	$students_id[] = $student->id;
+$data->courseid = $course->id;
+$data->students = $students;
+$comma = [];
+if ($studentid && is_int($studentid)) {
+	$comma = $studentid;
+	$data->student = $students[$studentid];
+} else {
+	$students_id = [];
+	foreach ($students as $student) {
+		$students_id[] = $student->id;
+	}
+	$comma = implode(",", $students_id);
 }
-$comma = implode(",", $students_id);
 
 $logs = $DB->get_records_sql("SELECT timecreated FROM moodle.mdl_logstore_standard_log WHERE action='loggedin' AND userid IN ({$comma}) order by timecreated");
 
