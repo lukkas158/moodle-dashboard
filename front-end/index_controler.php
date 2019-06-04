@@ -1,6 +1,5 @@
 <?php
 require "../../../config.php";
-
 // Object passado para index.php
 $data = new StdClass;
 
@@ -8,6 +7,8 @@ require_login();
 $courseid = required_param("courseid", PARAM_INT);
 $studentid = optional_param("studentid", NULL, PARAM_INT);
 $course = $DB->get_record("course", ["id" => $courseid], "*", MUST_EXIST);
+$info = get_fast_modinfo($course);
+print_object($info);
 
 $context = context_course::instance($course->id);
 $roles = get_user_roles($context, $USER->id);
