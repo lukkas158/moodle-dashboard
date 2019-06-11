@@ -1,4 +1,4 @@
-<?php require "index_controler.php"?>
+ <?php require "index_controler.php"?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,13 +59,11 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Cursos</span>
+          <span>Visão Geral</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="buttons.html">Buttons</a>
-            <a class="collapse-item" href="cards.html">Cards</a>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded" id="nav-section">
+            <h6 class="collapse-header" >Seções:</h6>
           </div>
         </div>
       </li>
@@ -74,7 +72,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-fw fa-wrench"></i>
-          <span>Utilidades</span>
+          <span>Fórum</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -86,6 +84,40 @@
           </div>
         </div>
       </li>
+
+       <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Outras Atividades</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Utilities:</h6>
+            <a class="collapse-item" href="utilities-color.html">Colors</a>
+            <a class="collapse-item" href="utilities-border.html">Borders</a>
+            <a class="collapse-item" href="utilities-animation.html">Animations</a>
+            <a class="collapse-item" href="utilities-other.html">Other</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Log dos Estudantes </span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Utilities:</h6>
+            <a class="collapse-item" href="utilities-color.html">Colors</a>
+            <a class="collapse-item" href="utilities-border.html">Borders</a>
+            <a class="collapse-item" href="utilities-animation.html">Animations</a>
+            <a class="collapse-item" href="utilities-other.html">Other</a>
+          </div>
+        </div>
+      </li>
+
+
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -298,7 +330,11 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $USER->firstname . ' ' . $USER->lastname ?></span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+<?php
+echo $data->user->firstname . ' ' . $data->user->lastname
+?>
+                  </span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->
@@ -347,7 +383,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Quantidade de Estudantes</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $data->student_qty ?></div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="userqty"></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -364,7 +400,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Curso </div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $data->course_shortname ?></div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="coursename"></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -406,9 +442,10 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Quantidade de Fóruns</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="forumqty"></div>
                     </div>
+
                     <div class="col-auto">
                       <i class="fas fa-comments fa-2x text-gray-300"></i>
                     </div>
@@ -427,27 +464,20 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Frequência de Acesso - Overview
-                    <?php if (isset($data->student)) {
-	echo "{$data->student->firstname} {$data->student->lastname}";
-}?></h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Frequência de Acesso ao Curso - Overview</h6>
                   <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="dropdown-toggle"  onclick="add_function_endpoint('getstudent',  show_student)" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Estudantes</div>
-<?php
-foreach ($data->students as $std) {
-	echo "<a class='dropdown-item' href='index.php?courseid={$data->courseid}&studentid={$std->id}'>{$std->firstname}</a>";
-}
-?>
+                      <div class="dropdown-header" id="menustudent">Estudantes</div>
+
                     </div>
                   </div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <div id="plot_freq"><!-- Plotly chart will be drawn inside this DIV --></div>
+                    <div id="frequencyplot"><!-- Plotly chart will be drawn inside this DIV --></div>
                 </div>
               </div>
             </div>
@@ -674,23 +704,7 @@ foreach ($data->students as $std) {
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-  <script>
-  var data_php = <?php echo json_encode($data->loggedin) ?>;
-  var x_date = Object.keys(data_php);
-  var y_count = Object.values(data_php);
-
-  var data = [
-  {
-    x: x_date,
-    y: y_count,
-    type: 'scatter',
-    mode: 'line'
-  }
-];
-  Plotly.newPlot('plot_freq', data);
-
-  </script>
+  <script src="js/customplotly.js"></script>
 
 </body>
 
