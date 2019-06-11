@@ -18,7 +18,6 @@ function course_quantity(result) {
 
 function forum_quantity(result) {
 	let result_json = JSON.parse(result);
-	console.log(result_json);
 	$("#forumqty").html(result_json.length);
 }
 
@@ -40,6 +39,66 @@ function nav_section(result) {
 	}
 }
 
+function forum_visu(result) {
+	let result_json = JSON.parse(result);
+	for(let index in result_json) {
+		let perc = result_json[index].perc * 100;
+		let barcolor = '';
+		let warning = '';
+		let info = '';
+		if( perc <= 0) {
+			barcolor = 'bg-danger';
+			perc = 100;
+			warning = ' Nenhum estudante visualizou este fórum';
+		} else if( perc < 50) {
+			barcolor = 'bg-danger';
+			info = '<i class="fas fa-info-circle"></i>'
+		} else if (perc >=  50 && perc < 80 ) {
+			barcolor = 'bg-warning';
+			info = '<i class="fas fa-info-circle"></i>'
+		} else if( perc >= 80 && perc < 100 ) {
+			barcolor = 'bg-info';
+			info = '<i class="fas fa-info-circle"></i>'
+		} else {
+			barcolor = 'bg-success';
+		}
+
+		let dropd = '';
+		if(info) {
+			dropd = 
+			`<div class="dropdown no-arrow">
+          <a class="dropdown-toggle"  onclick="show_student_notview_forum(event,${result_json[index].id})" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           	${info}
+           </a>
+           <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+           		<div class="dropdown-header" id="student_notview_forum"></div>
+           </div>
+       </div>`
+		}
+
+		$("#forumvisualization").append(
+			`<h4 class="small font-weight-bold">${result_json[index].name} <span class="float-right">${perc}% </span> 
+			<a href=""> ${dropd} </a></h4>
+        <div class="progress mb-4">
+        <div class="progress-bar ${barcolor}" role="progressbar" style="width: ${perc}%" aria-valuenow="${perc}" aria-valuemin="0" aria-valuemax="100"><i>${warning}</i></div>
+       </div>`);
+	}
+
+}
+
+function show_student_notview_forum(event, forumid) {
+	let url = get_api_url('getforumvisu',"&forumid=" + forumid);
+	$.ajax( {'url': url, 'success': (result) => {
+		students = JSON.parse(result);
+		$('#student_notview_forum').html("Estudantes que não viram este forúm");
+		for(let index in students) {
+			if(students[index].view == 0) {
+				$('#student_notview_forum').append(`<a class='dropdown-item'>${students[index].firstname} ${students[index].lastname} </a>`);
+			}
+		}
+	}});
+}
+
 function course_frequency(result) {
 	let data = JSON.parse(result);
 	var data_plot = [
@@ -49,7 +108,6 @@ function course_frequency(result) {
 	    type: 'scatter'
 	  }
 	];
-
 	Plotly.newPlot('frequencyplot', data_plot)
 }
 
@@ -87,4 +145,5 @@ $(document).ready(function () {
 	add_function_endpoint('getsection', nav_section);
 	add_function_endpoint('getfrequency', course_frequency);
 	add_function_endpoint('getforum', forum_quantity);
+	add_function_endpoint('getforumvisu', forum_visu);
 });
