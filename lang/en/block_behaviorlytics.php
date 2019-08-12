@@ -25,3 +25,4 @@
 $string['pluginname'] = 'CiDE Behavior Analytics';
 $string['behaviorlytics:addinstance'] = 'Add a new Behavior Analytics block';
 $string['behaviorlytics:myaddinstance'] = 'Add a new Behavior Analytics block to Dashboard';
+$string['behaviorlytics:viewdash'] = 'View Dashboard';

@@ -26,25 +26,34 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-    'block/behaviorlytics:myaddinstance' => array(
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => array(
-            'user' => CAP_ALLOW
-        ),
+	'block/behaviorlytics:myaddinstance' => array(
+		'captype' => 'write',
+		'contextlevel' => CONTEXT_SYSTEM,
+		'archetypes' => array(
+			'user' => CAP_ALLOW,
+		),
 
-        'clonepermissionsfrom' => 'moodle/my:manageblocks'
-    ),
+		'clonepermissionsfrom' => 'moodle/my:manageblocks',
+	),
 
-    'block/behaviorlytics:addinstance' => array(
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
+	'block/behaviorlytics:viewdash' => array(
+		'captype' => 'read',
+		'contextlevel' => CONTEXT_MODULE,
+		'archetypes' => array(
+			'editingteacher' => CAP_ALLOW,
+			'teacher' => CAP_ALLOW,
+		),
+	),
 
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_BLOCK,
-        'archetypes' => array(
-            'manager' => CAP_ALLOW
-        ),
+	'block/behaviorlytics:addinstance' => array(
+		'riskbitmask' => RISK_SPAM | RISK_XSS,
 
-        'clonepermissionsfrom' => 'moodle/site:manageblocks'
-    )
+		'captype' => 'write',
+		'contextlevel' => CONTEXT_BLOCK,
+		'archetypes' => array(
+			'manager' => CAP_ALLOW,
+		),
+
+		'clonepermissionsfrom' => 'moodle/site:manageblocks',
+	),
 );
